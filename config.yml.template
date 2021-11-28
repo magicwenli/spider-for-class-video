@@ -1,0 +1,4 @@
+base_url: "http://class.xjtu.edu.cn/" # leave this line unchanged
+save_dir: "./save"
+course_id: 10000
+cookies: "" # you can grab it from chrome devtools

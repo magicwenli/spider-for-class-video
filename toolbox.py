@@ -1,10 +1,15 @@
 import json
 import random
-
+import yaml
 import youtube_dl
 
+def init(cfg_path='./config.yml'):
+    with open(cfg_path, 'r', encoding="utf-8") as file:
+        file_data = file.read()
+    data = yaml.load(file_data,Loader=yaml.FullLoader)
+    return data
 
-def LoadUserAgents(uafile):
+def loadUserAgents(uafile):
     uas = []
     with open(uafile, 'rb') as uaf:
         for ua in uaf.readlines():
@@ -31,9 +36,12 @@ def generateVideoInfoUrls(base_url, act_ids):
 
 
 def getActivitiesID(url, session):
-    jstext = session.get(url).text
-    # print(jstext)
-    jsDict = json.loads(jstext)
+    try:
+        jstext = session.get(url).text
+        jsDict = json.loads(jstext)
+    except Exception as e:
+        print(e)
+    
     actID = []
     try:
         for act in jsDict["activities"]:
@@ -57,7 +65,7 @@ def getDownloadUrls(url, session):
 
     video_info = {}
     video_info['title'] = jsDict['title'].split()[0]
-    video_info['data'] = jsDict['start_time']
+    video_info['date'] = jsDict['start_time']
     for video in jsDict['video_suite']['videos']:
         if video['camera_type'] == 'encoder':
             video_info['encoder'] = video['file_url']
@@ -67,13 +75,12 @@ def getDownloadUrls(url, session):
     return video_info
 
 
-def getCookiesFromFile(cookie_dict, cookie_file='cookies.txt'):
-    with open(cookie_file, 'r', encoding='utf-8') as frcookie:
-        cookies_txt = frcookie.read().strip(';')  # 读取文本内容
-        for item in cookies_txt.split(';'):
-            name, value = item.strip().split('=', 1)
-            cookie_dict[name] = value
-
+def getCookiesDictFromString(cookies_s):
+    cookies_dict={}
+    for item in cookies_s.split(';'):
+        name, value = item.strip().split('=', 1)
+        cookies_dict[name] = value
+    return cookies_dict
 
 def my_hook(d):
     if d['status'] == 'finished':
@@ -132,8 +139,10 @@ def writeDownloadUrlsToFile(vinfos, save_dir='.'):
     try:
         with open(save_dir + '/urls_inst.txt', 'w') as f:
             f.writelines(urls_inst)
+            print(save_dir + '/urls_inst.txt saved')
 
         with open(save_dir + '/urls_enco.txt', 'w') as f:
             f.writelines(urls_enco)
+            print(save_dir + '/urls_enco.txt saved')
     except Exception as e:
         print(e)
