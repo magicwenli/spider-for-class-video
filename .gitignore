@@ -2,3 +2,5 @@ urls*.txt
 .idea/
 cookies.txt
 config.yml
+__pycache__/
+save/

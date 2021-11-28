@@ -2,6 +2,7 @@ import json
 import random
 import yaml
 import youtube_dl
+import os
 
 def init(cfg_path='./config.yml'):
     with open(cfg_path, 'r', encoding="utf-8") as file:
@@ -125,6 +126,9 @@ def handleAndSave(vinfo, file_dir, options='all'):
 def writeDownloadUrlsToFile(vinfos, save_dir='.'):
     urls_inst = []
     urls_enco = []
+
+    if not os.path.exists(save_dir):
+        os.mkdir(save_dir)
 
     for v in vinfos:
         if 'encoder' in v.keys():
