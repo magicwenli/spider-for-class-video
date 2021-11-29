@@ -1,4 +1,4 @@
-import requests.cookies
+import requests
 from toolbox import *
 
 config=init()
@@ -35,4 +35,4 @@ for video_url in video_info_urls:
 writeDownloadUrlsToFile(vinfos, save_dir=config["save_dir"])
 
 # option='ppt','instructor','all'
-# handleAndSave(vinfos, save_dir, 'all')
+# handleAndSave(vinfos, config['save_dir'], 'instructor')

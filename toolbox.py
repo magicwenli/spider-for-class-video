@@ -96,34 +96,34 @@ def handleAndSave(vinfo, file_dir, options='all'):
         }
 
         if options == 'instructor':
-            outtmpl = file_dir + '/' + vi['data'][:10] + '_' + 'instructor' + '.%(ext)s'
+            outtmpl = file_dir + '/' + vi['date'][:10] + '_' + 'instructor' + '.%(ext)s'
             ydl_opts['outtmpl'] = outtmpl
             print('downloading ', outtmpl)
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([vi['instructor']])
 
         elif options == 'ppt':
-            outtmpl = file_dir + '/' + vi['data'][:10] + '_' + 'encoder' + '.%(ext)s'
+            outtmpl = file_dir + '/' + vi['date'][:10] + '_' + 'encoder' + '.%(ext)s'
             ydl_opts['outtmpl'] = outtmpl
             print('downloading ', outtmpl)
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([vi['encoder']])
 
         else:
-            outtmpl = file_dir + '/' + vi['data'][:10] + '_' + 'instructor' + '.%(ext)s'
+            outtmpl = file_dir + '/' + vi['date'][:10] + '_' + 'instructor' + '.%(ext)s'
             ydl_opts['outtmpl'] = outtmpl
             print('downloading ', outtmpl)
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([vi['instructor']])
 
-            outtmpl = file_dir + '/' + vi['data'][:10] + '_' + 'encoder' + '.%(ext)s'
+            outtmpl = file_dir + '/' + vi['date'][:10] + '_' + 'encoder' + '.%(ext)s'
             ydl_opts['outtmpl'] = outtmpl
             print('downloading ', outtmpl)
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([vi['encoder']])
 
 
-def writeDownloadUrlsToFile(vinfos, save_dir='.'):
+def writeDownloadUrlsToFile(vinfos, save_dir='./'):
     urls_inst = []
     urls_enco = []
 
